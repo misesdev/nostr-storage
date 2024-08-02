@@ -1,10 +1,14 @@
 
-
 version: '3'
+
+#include:
+#   - path:
+#       - ./db-storage.yaml
+#       - ./db-cache.yaml
 
 services:
 
-    web-storage:
+    storage-app:
         image: nosrt-storage/app
         build:
             context: ./vendor/laravel/sail/runtimes/8.2
@@ -13,6 +17,7 @@ services:
                 WWWGROUP: '${WWWGROUP}'
         ports:
             - '${APP_PORT:-80}:80'
+            - '${VITE_PUSHER_PORT:-5173}:5173'  # vite for tailwindcss includes
         volumes:
             - '.:/var/www/html'
         depends_on:
