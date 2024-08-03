@@ -7,18 +7,33 @@ use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
-    //
-    public function index(Request $request)
+    public function index()
     {
+        if(session()->has('email'))
+        {
+            return redirect('/');
+        }
+
         return view('register/index');
     }
 
-    public function register(User $user)
+    public function register(Request $request)
     {
-        // implements register
-        dd($user->name);
+        $user = $request->validate([
+            'name' => ['required', 'max:50'],
+            'email' => ['required', 'max:100', 'unique:users'],
+            'password' => ['required']
+        ]);
+
+        if($request->password != $request->password_confirm)
+        {
+            return back()->withErrors([
+                'password_confirm' => 'Passwords do not match!'
+            ]);
+        }
+
+        User::create($user);
 
         return redirect("/login");
     }
-
 }
