@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -31,5 +32,15 @@ Route::post('/forgot', [LoginController::class, 'resetPassword']);
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 
 Route::post('/register', [RegisterController::class, 'register']);
+
+// Account Group
+Route::prefix('user')->group(function() {
+
+    Route::get('/account', [AccountController::class, 'index'])->name('account');
+
+})->middleware('auth');
+
+
+
 
 
