@@ -16,12 +16,16 @@ use App\Http\Controllers\RegisterController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-}); //->middleware('auth');
+    return view('dashboard');
+})->middleware('auth');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 
 Route::post('/login', [LoginController::class, 'login']);
+
+Route::get('/forgot', [LoginController::class, 'forgot'])->name('forgot');
+
+Route::post('/forgot', [LoginController::class, 'resetPassword']);
 
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 

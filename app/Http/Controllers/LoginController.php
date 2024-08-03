@@ -15,8 +15,8 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         // implements login
-
-        return redirect('/');
+        dd($request);
+        return "helo world"; //redirect('/');
     }
 
     public function forgot(Request $request)
@@ -24,4 +24,8 @@ class LoginController extends Controller
         return view('login.forgot');
     }
 
+    public function resetPassword(Request $request)
+    {
+        return redirect('/login');
+    }
 }

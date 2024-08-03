@@ -16,8 +16,9 @@ class RegisterController extends Controller
     public function register(User $user)
     {
         // implements register
+        dd($user->name);
 
-        return redirect("/");
+        return redirect("/login");
     }
 
 }
