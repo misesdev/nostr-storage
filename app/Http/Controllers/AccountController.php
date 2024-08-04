@@ -10,6 +10,6 @@ class AccountController extends Controller
     {
         $user = auth()->user();
 
-        return view('user.account.index', ['user']);
+        return view('user.account.index', ['user' => $user]);
     }
 }

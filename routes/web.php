@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\TokensController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,9 +37,19 @@ Route::post('/register', [RegisterController::class, 'register']);
 // Account Group
 Route::prefix('user')->group(function() {
 
-    Route::get('/account', [AccountController::class, 'index'])->name('account');
+    Route::get('/account', [AccountController::class, 'index']);
 
 })->middleware('auth');
+
+
+// Tokens Manage Group
+Route::prefix('tokens')->group(function() {
+
+    Route::get('/manage', [TokensController::class, 'index']);
+
+})->middleware('auth');
+
+
 
 
 

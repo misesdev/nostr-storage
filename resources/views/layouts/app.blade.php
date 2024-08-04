@@ -18,6 +18,8 @@
             .active-nav-link { background: #1947ee; }
             .nav-item:hover { background: #1947ee; }
             .account-link:hover { background: #3d68ff; }
+            a.btn-primary { background: #3d68ff; }
+            a.btn-primary:hover { background: #1947ee }
         </style>
         @section('styles')
     </head>
