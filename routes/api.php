@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->group(function() {
 
     Route::post('/delete/{image}', [BlobController::class, 'delete']);
 
-})->middleware('auth:sanctum');
+});
 
 
 

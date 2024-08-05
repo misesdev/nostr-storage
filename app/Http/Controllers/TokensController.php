@@ -20,9 +20,9 @@ class TokensController extends Controller
             'expires' => ['required']
         ]);
 
-        auth()->user()->createToken($request->name, ['*'], $request->date('expires'));
+        $token = auth()->user()->createToken($request->name, ['*'], $request->date('expires'))->plainTextToken;
 
-        return redirect('/tokens/manage');
+        return redirect('/tokens/manage')->with('token', $token);
     }
 
     public function delete($id)

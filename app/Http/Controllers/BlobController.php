@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class BlobController extends Controller
@@ -14,10 +13,13 @@ class BlobController extends Controller
             'archive' => ['required']
         ]);
 
-        $user_dir = str_replace(" ", "-", auth()->user()->name);
+        if(empty($request->token)) {
+            $token_dir = auth()->user()->tokens->first()->token;
+        } else {
+            $token_dir = $request->token;
+        }
 
-
-        $path = $request->file('archive')->storePublicly('storage/'.$user_dir);
+        $path = $request->file('archive')->storePublicly('storage/'.$token_dir);
 
         return redirect($path);
     }
@@ -28,18 +30,22 @@ class BlobController extends Controller
             'archive' => 'required'
         ]);
 
-        $user_dir = str_replace(" ", "-", auth()->user()->name);
+        if(empty($request->token)) {
+            $token_dir = auth()->user()->tokens->first()->token;
+        } else {
+            $token_dir = $request->token;
+        }
 
-        $path = $request->file('archive')->storePublicly('storage/'.$user_dir);
+        $path = $request->file('archive')->storePublicly('storage/'.$token_dir);
 
-        return $path;
+        return url('/').'/'.$path;
     }
 
     public function delete($image)
     {
-        $user_dir = str_replace(" ", "-", auth()->user()->name);
+        $token_dir = auth()->user()->tokens->first()->token;
 
-        Storage::delete('storage/'.$user_dir.'/'.$image);
+        Storage::delete('storage/'.$token_dir.'/'.$image);
 
         return [
             'success' => true,

@@ -9,6 +9,9 @@
                 Create
             </a>
         </div>
+        @if(session('token'))
+            <div class="alert alert-success" role="alert"> Please copy and save the token, it will not be displayed again: '{{ session('token') }}'</div>
+        @endif
 
         @if($errors->any())
             @foreach ($errors->all() as $error)
@@ -22,7 +25,8 @@
                     <thead>
                         <tr>
                             <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Name</th>
-                            <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Token Value</th>
+                            <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">directory</th>
+                            <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Abilities</th>
                             <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Expires In</th>
                             <th class="py-4 px-2 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th>
                         </tr>
@@ -32,7 +36,8 @@
 
                             <tr class="hover:bg-grey-lighter">
                                 <td class="py-4 px-6 border-b border-grey-light">{{ $token->name }}</td>
-                                <td class="py-4 px-6 border-b border-grey-light">{{ $token->token }}</td>
+                                <td class="py-4 px-6 border-b border-grey-light">storage/{{ $token->token }}/</td>
+                                <td class="py-4 px-6 border-b border-grey-light">{{ implode(', ',$token->abilities) }}</td>
                                 <td class="py-4 px-6 border-b border-grey-light">{{ $token->expires_at }}</td>
                                 <td class="py-4 px-6 border-b border-grey-light">
                                     <a href="/tokens/delete/{{ $token->id }}" >
