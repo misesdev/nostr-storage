@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\BlobController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -39,6 +40,8 @@ Route::prefix('user')->group(function() {
 
     Route::get('/account', [AccountController::class, 'index']);
 
+    Route::post('/upload', [BlobController::class, 'upload']);
+
 })->middleware('auth');
 
 
@@ -46,6 +49,10 @@ Route::prefix('user')->group(function() {
 Route::prefix('tokens')->group(function() {
 
     Route::get('/manage', [TokensController::class, 'index']);
+
+    Route::post('/create', [TokensController::class, 'create']);
+
+    Route::get('/delete/{id}', [TokensController::class, 'delete']);
 
 })->middleware('auth');
 

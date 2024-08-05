@@ -15,11 +15,20 @@ use \App\Http\Controllers\BlobController;
 |
 */
 
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/upload', [BlobController::class, 'upload']);
+// Api routes authenticated
+Route::middleware('auth:sanctum')->group(function() {
+
+    Route::post('/upload', [BlobController::class, 'uploadFile']);
+
+    Route::post('/delete/{image}', [BlobController::class, 'delete']);
+
+})->middleware('auth:sanctum');
+
 
 
 
