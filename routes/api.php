@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Api routes authenticated
-Route::middleware('auth:sanctum')->group(function() {
+Route::middleware('auth:sanctum')->prefix('storage')->group(function() {
 
     Route::post('/upload', [BlobController::class, 'uploadFile']);
 
