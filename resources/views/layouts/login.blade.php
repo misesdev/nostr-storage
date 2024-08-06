@@ -7,6 +7,7 @@
     <title>{{ $title ?? 'Nostr Storage' }}</title>
     <meta name="author" content="David Grzyb">
     <meta name="description" content="">
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
 
     <style>

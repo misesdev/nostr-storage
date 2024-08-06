@@ -1,8 +1,7 @@
 @extends('layouts/app')
 
 @section('styles')
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.semanticui.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.css" />
+    @include('components.assets.dt-css')
 @endsection
 
 @section('content')
@@ -88,9 +87,7 @@
 @endsection
 
 @section('scripts')
-    <script src="https://cdn.datatables.net/2.1.3/js/dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/2.1.3/js/dataTables.semanticui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
+    @include('components.assets.dt-js')
     <script>
         let metrics = @php echo json_encode($metrics) @endphp
 
