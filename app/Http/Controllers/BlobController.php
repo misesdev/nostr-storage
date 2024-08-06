@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Metrics;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -30,13 +31,20 @@ class BlobController extends Controller
             'archive' => 'required'
         ]);
 
+        $user = auth()->user();
+
         if(empty($request->token)) {
-            $token_dir = auth()->user()->tokens->first()->token;
+            $token_dir = $user->tokens->first()->token;
         } else {
             $token_dir = $request->token;
         }
 
         $path = $request->file('archive')->storePublicly('storage/'.$token_dir);
+
+        Metrics::create([
+            'user_id' => $user->id,
+            'archive' => $path
+        ]);
 
         return url('/').'/'.$path;
     }
@@ -46,6 +54,8 @@ class BlobController extends Controller
         $token_dir = auth()->user()->tokens->first()->token;
 
         Storage::delete('storage/'.$token_dir.'/'.$image);
+
+
 
         return [
             'success' => true,

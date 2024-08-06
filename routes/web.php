@@ -36,13 +36,19 @@ Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
 // Account Group
-Route::prefix('user')->group(function() {
+Route::middleware('auth')->prefix('user')->group(function() {
 
     Route::get('/account', [AccountController::class, 'index']);
 
     Route::post('/upload', [BlobController::class, 'upload']);
 
-})->middleware('auth');
+    Route::post('/file/delete/{file}', [BlobController::class, 'delete']);
+
+    Route::post('/update', [AccountController::class, 'update']);
+
+    Route::post('/update-profile', [AccountController::class, 'updateProfile']);
+
+});
 
 
 // Tokens Manage Group
