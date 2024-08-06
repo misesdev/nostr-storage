@@ -10,8 +10,7 @@
 
         <div class="flex items-center justify-between px-4 py-4 border-b lg:py-6 dark:border-primary-darker">
             <h1 class="text-2xl font-semibold">My Tokens</h1>
-            <a href="#" data-toggle="modal" data-target="#create-modal"
-                class="btn-primary px-4 py-2 text-sm text-white rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring focus:ring-primary focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">
+            <a href="#" data-toggle="modal" data-target="#create-modal" class="ui primary button">
                 Create
             </a>
         </div>

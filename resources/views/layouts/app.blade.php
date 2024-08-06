@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Nostr Storage' }}</title>
-    <meta name="author" content="David Grzyb">
+    <meta name="author" content="Mises Dev">
     <meta name="description" content="">
+    <link rel="icon" type="image/jpeg" href="/favicon.png" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -32,7 +33,7 @@
 
         .upgrade-btn:hover {
             background: #0038fd;
-        }
+}
 
         .active-nav-link {
             background: #1947ee;
@@ -182,7 +183,7 @@
                                 <div class="form-group">
                                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                         for="file_input">Upload file</label>
-                                    <input id="archive" name="archive" type="file" required
+                                    <input id="archive" name="archive" type="file" accept="image/png,image/jpeg,image/jpg,image/gif" required
                                         class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                                 </div>
                                 <input type="hidden" name="redirect_to" id="redirect_to"

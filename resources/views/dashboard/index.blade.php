@@ -9,19 +9,24 @@
     <main>
         <div class="flex items-center justify-between px-2 py-2 lg:py-2">
             <h1 class="text-2xl font-semibold">Dashboard</h1>
-            <a href="https://github.com/emptioapp/nostr-storage" target="_blank"
-                class="btn-primary px-4 py-2 text-sm text-white rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring focus:ring-primary focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">
+            <a href="https://github.com/emptioapp/nostr-storage" target="_blank" class="ui primary button">
                 Github Projetc
             </a>
         </div>
 
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                <div class="alert alert-danger" role="alert">{{ $error }}</div>
+            @endforeach
+        @endif
+
         <div class="flex flex-wrap mt-12">
-            <div class="w-full lg:w-1/1 pr-0 lg:pr-2">
+            <div class="w-full lg:w-1/2 pr-0 lg:pr-2">
                 <p class="text-xl pb-3 flex items-center">
                     <i class="fas fa-plus mr-3"></i> Last 7 Days
                 </p>
                 <div class="p-6 bg-white">
-                    <canvas id="chartOne" width="350" height="200"></canvas>
+                    <canvas id="chartOne" width="400" height="200"></canvas>
                 </div>
             </div>
         </div>
@@ -43,14 +48,22 @@
                             <tr class="">
                                 <td class="">
                                     <img src="/{{ $file->archive }}" class="image-table"
-                                        style="max-width: 100px;max-height: 75px;" />
+                                        style="max-width:100px;max-height:75px;border-radius:10px;" />
                                 </td>
-                                <td>{{ url('/') }}/{{ $file->archive }}</td>
+                                <td>
+                                    <div class="ui action input" style="width: 90%">
+                                        <input type="text" value="{{ url('/') }}/{{ $file->archive }}" disabled>
+                                        <button class="ui teal right labeled icon button" onclick="methods.copy(this)">
+                                            <i class="copy icon"></i>
+                                            Copy
+                                        </button>
+                                    </div>
+                                </td>
                                 <td class="">{{ $file->created_at }}</td>
                                 <td class="">
-                                    <a href="/file/delete/{{ $file->id }}">
+                                    <a href="#" onclick='methods.delete(this, {{ $file->id }})'>
                                         <i class="fa fa-trash"></i>
-                                        </id>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -58,7 +71,8 @@
                 </table>
 
                 @if (empty($file_list))
-                    <div class="py-4 px-6 bg-grey-ligh font-bold uppercase text-sm text-grey-dark text-center">No Results
+                    <div class="py-4 px-6 bg-grey-ligh font-bold uppercase text-sm text-grey-dark text-center">
+                        No Results
                     </div>
                 @endif
 
@@ -99,21 +113,60 @@
                         }
                     }]
                 }
-            }
+            },
+            responseve: true,
+            maintainAspectRatio: false
         });
 
-        $(document).ready(() => {
-            new DataTable("#table-file", {
-                info: false,
-                searchable: false,
-                layout: {
-                    bottomEnd: {
-                        paging: {
-                            firstLast: false
+        const methods = {
+            table: null,
+            copy: (event) => {
+                let link = $(event).parent().children('input').val()
+
+                console.log(link)
+                $.toast({
+                    class : 'success',
+                    message: 'Link copied to clipboard!',
+                    showProgress: 'top'
+                })
+            },
+            delete: (event, id) => {
+                $.toast({
+                    position: 'bottom right',
+                    message: 'Do you really want to delete this file?',
+                    displayTime: 5000,
+                    class: 'white',
+                    classActions: 'top attached',
+                    showProgress: 'bottom',
+                    actions: [{
+                        text: 'Yes, delete',
+                        class: 'green',
+                        click: function() {
+                            $(event).parent().parent().remove();
+                            $.toast({message:'Deleted file from storage blob!'});
+                        }
+                    },{
+                        text: 'No',
+                        class: 'gray',
+                        click: function() {  }
+                    }]
+                })
+            },
+            init: () => {
+                methods.table = new DataTable("#table-file", {
+                    info: false,
+                    searchable: false,
+                    layout: {
+                        bottomEnd: {
+                            paging: {
+                                firstLast: false
+                            }
                         }
                     }
-                }
-            })
-        })
+                })
+            }
+        }
+
+        $(document).ready(methods.init)
     </script>
 @endsection
