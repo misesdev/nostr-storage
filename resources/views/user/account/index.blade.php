@@ -1,8 +1,9 @@
 @extends('layouts/app')
 
-@section('styles')
-    {{-- <link rel="stylesheet" href="{{ asset("/css/account.css") }}" /> --}}
-@endsection
+@php
+    $tab = old('tab');
+    $tab = isset($tab) ? $tab : 'profile';
+@endphp
 
 @section('content')
     <main>
@@ -14,28 +15,27 @@
             </a> --}}
         </div>
 
-        @if(session('message'))
-            <div class="alert alert-success" role="alert">{{ session('message') }}</div>
-        @endif
+        <div class="col-md-10">
+            @if(session('message'))
+                <div class="alert alert-success" role="alert">{{ session('message') }}</div>
+            @endif
 
-        @if($errors->any())
-            @foreach ($errors->all() as $error)
-                <div class="alert alert-danger" role="alert">{{ $error }}</div>
-            @endforeach
-        @endif
+            @if($errors->any())
+                @foreach ($errors->all() as $error)
+                    <div class="alert alert-danger" role="alert">{{ $error }}</div>
+                @endforeach
+            @endif
+        </div>
 
-        <div class="container-xl px-4 mt-4">
+        <div id="content" class="container-xl px-4 mt-4">
             <!-- Account page navigation-->
-            <nav class="nav nav-borders">
-                <a class="nav-link active ms-0" href="#" target="__blank">Profile</a>
-                <a class="nav-link" href="#" target="__blank">Security</a>
-                {{-- <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-edit-notifications-page"
-                    target="__blank">Notifications</a> --}}
-            </nav>
-            <hr class="mt-0 mb-4">
+            <div class="ui pointing secondary menu">
+                <a class="item {{ $tab == 'profile' ? 'active' : '' }}" data-tab="profile">Profile</a>
+                <a class="item {{ $tab == 'security' ? 'active' : '' }}" data-tab="security">Security</a>
+            </div>
 
-            <div class="row">
-
+            <div class="ui tab segment {{ $tab == 'profile' ? 'active' : '' }}" data-tab="profile">
+                <div class="row">
                 <div class="col-xl-4">
                     <!-- Profile picture card-->
                     <div class="card mb-4 mb-xl-0">
@@ -71,6 +71,8 @@
                                     </div>
                                 </div>
 
+                                <input name="tab" value="profile" type="hidden" />
+
                                 <button type="submit" class="btn btn-primary" style="float: right;margin: 10px 0px;" type="button">
                                     Save changes
                                 </button>
@@ -78,8 +80,44 @@
                         </form>
                     </div>
                 </div>
+                </div>
             </div>
 
+            <div class="ui tab segment {{ $tab == 'security' ? 'active' : '' }}" data-tab="security">
+                <!-- Account details card-->
+                <div class="card mb-6">
+                    <form method="post" action="/user/update-password" >
+                        @csrf
+                        <div class="card-header">Reset Password</div>
+                        <div class="card-body">
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-4">
+                                    <label class="small mb-1" for="password">Current Password</label>
+                                    <input id="password" name="password" type="password" placeholder="Enter current password" value="" maxlength="50" required class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" />
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="small mb-1" for="new_password">New Password</label>
+                                    <input id="new_password" name="new_password" type="password" placeholder="New Password" value="" required class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" />
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="small mb-1" for="confirm_password">Confirm Password</label>
+                                    <input id="confirm_password" name="confirm_password" type="password" placeholder="Confirm Password" value="" required class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" />
+                                </div>
+                            </div>
+
+                            <input name="tab" value="security" type="hidden" />
+
+                            <button type="submit" class="btn btn-primary" style="float: right;margin: 10px 0px;" type="button">
+                                Update Password
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
 
             <!-- Modal -->
             <div class="modal fade" id="upload-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -97,10 +135,13 @@
                                 <div class="form-group">
                                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                         for="file_input">Upload file</label>
-                                    <input id="archive" name="archive" type="file" required
+                                    <input id="archive" name="archive" type="file" accept="image/png,image/jpeg,image/jpg,image/gif" required
                                         class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                                 </div>
                             </div>
+
+                            <input name="tab" value="profile" type="hidden" />
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Save</button>
@@ -111,4 +152,14 @@
             </div>
 
     </main>
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(() => {
+            $('#content .menu .item').tab({
+                context: '#content'
+            })
+        })
+    </script>
 @endsection

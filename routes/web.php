@@ -48,6 +48,8 @@ Route::middleware('auth')->prefix('user')->group(function() {
 
     Route::post('/update-profile', [AccountController::class, 'updateProfile']);
 
+    Route::post('/update-password', [AccountController::class, 'updatePassword']);
+
 });
 
 

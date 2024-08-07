@@ -17,9 +17,9 @@
         <form class="space-y-6" action="/login" method="POST">
             @csrf
 
-            @include('components.forms.input', ['label' => 'Email Address', 'name' => 'email', 'type' => 'email', 'required' => true])
+            @include('components.forms.input', ['label' => 'Email Address', 'name' => 'email', 'type' => 'email', 'required' => true, 'maxlength' => 80])
 
-            @include('components.forms.input', ['label' => 'Password', 'name' => 'password', 'type' => 'password', 'required' => true, 'login' => true])
+            @include('components.forms.input', ['label' => 'Password', 'name' => 'password', 'type' => 'password', 'required' => true, 'login' => true, 'maxlength' => 50])
 
 
             <div>

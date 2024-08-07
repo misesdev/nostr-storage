@@ -20,12 +20,12 @@
         @endif
 
         <div class="flex flex-wrap mt-12">
-            <div class="w-full lg:w-1/2 pr-0 lg:pr-2">
+            <div class="w-full lg:w-1/1 pr-0 lg:pr-2">
                 <p class="text-xl pb-3 flex items-center">
                     <i class="fas fa-plus mr-3"></i> Last 7 Days
                 </p>
                 <div class="p-6 bg-white">
-                    <canvas id="chartOne" width="400" height="200"></canvas>
+                    <canvas id="chartOne" width="500" height="350"></canvas>
                 </div>
             </div>
         </div>
@@ -106,21 +106,24 @@
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero: true
+                           beginAtZero: true
                         }
                     }]
-                }
+                },
+                maintainAspectRatio: false
             },
-            responseve: true,
-            maintainAspectRatio: false
         });
 
         const methods = {
             table: null,
             copy: (event) => {
-                let link = $(event).parent().children('input').val()
 
-                console.log(link)
+                let input = $(event).parent().children('input')
+
+                input.select()
+
+                navigator.clipboard.writeText(input)
+
                 $.toast({
                     class : 'success',
                     message: 'Link copied to clipboard!',

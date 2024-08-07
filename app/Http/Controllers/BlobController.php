@@ -11,7 +11,7 @@ class BlobController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-            'archive' => ['required', 'image', 'max:1000']
+            'archive' => ['required', 'image', 'max:2000']
         ]);
 
         if(empty($request->token)) {
@@ -28,7 +28,7 @@ class BlobController extends Controller
     public function uploadFile(Request $request)
     {
         $request->validate([
-            'archive' => ['required', 'image', 'max1000']
+            'archive' => ['required', 'image', 'max:2000']
         ]);
 
         $user = auth()->user();
