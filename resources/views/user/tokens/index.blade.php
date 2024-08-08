@@ -54,12 +54,6 @@
                         @endforeach
                     </tbody>
                 </table>
-
-                @if ($tokens->isEmpty())
-                    <div class="py-4 px-6 bg-grey-ligh font-bold uppercase text-sm text-grey-dark text-center">No Results
-                    </div>
-                @endif
-
             </div>
         </div>
 

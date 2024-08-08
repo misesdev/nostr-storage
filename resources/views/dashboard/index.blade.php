@@ -69,12 +69,6 @@
                     </tbody>
                 </table>
 
-                @if (empty($file_list))
-                    <div class="py-4 px-6 bg-grey-ligh font-bold uppercase text-sm text-grey-dark text-center">
-                        No Results
-                    </div>
-                @endif
-
             </div>
         </div>
 
