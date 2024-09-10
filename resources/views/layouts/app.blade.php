@@ -34,7 +34,7 @@
 
         .upgrade-btn:hover {
             background: #0038fd;
-}
+        }
 
         .active-nav-link {
             background: #1947ee;
@@ -108,7 +108,8 @@
                     <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
                         <a href="{{ url('/user/account') }}"
                             class="block px-4 py-2 account-link hover:text-white">Account</a>
-                        <a href="#" class="block px-4 py-2 account-link hover:text-white">Support</a>
+                        <a href="#" data-toggle="modal" data-target="#donate-modal"
+                            class="block px-4 py-2 account-link hover:text-white">Donate</a>
                         <a href="{{ url('logout') }}" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
                     </div>
                 </div>
@@ -135,9 +136,9 @@
                         <i class="fas fa-sticky-note mr-3"></i>
                         My Tokens
                     </a>
-                    <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <a href="#" data-toggle="modal" data-target="#donate-modal" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                         <i class="fas fa-cogs mr-3"></i>
-                        Support
+                        Donate
                     </a>
                     <a href="/user/account"
                         class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
@@ -195,6 +196,34 @@
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Donate Modal -->
+            <div class="modal fade" id="donate-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Donate to this Project</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <h5 class="modal-title">
+                                To collaborate with the project, send sats to this lightning address:
+                            </h3>
+                            <br/>
+                            <div class="alert alert-success" role="alert">greatasphalt42@walletofsatoshi.com</div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
