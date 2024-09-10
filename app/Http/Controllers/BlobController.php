@@ -14,8 +14,17 @@ class BlobController extends Controller
             'archive' => ['required', 'image', 'max:2000']
         ]);
 
-        if(empty($request->token)) {
-            $token_dir = auth()->user()->tokens->first()->token;
+        $user = auth()->user();
+        $token = $user->tokens->first();
+
+        if(empty($token)) {
+            return back()->withErrors([
+                'token' => 'You do not have an upload token, please create one to perform uploads'
+            ]);
+        }
+
+        if(empty($request->query("token", null))) {
+            $token_dir = $token->token;
         } else {
             $token_dir = $request->token;
         }
@@ -26,7 +35,7 @@ class BlobController extends Controller
             ]);
         }
 
-        $path = $request->file('archive')->storePublicly('files/storage/'.$token_dir);
+        $path = $request->file('archive')->storePublicly('files/storage/'.substr($token_dir, 0, 25));
 
         return redirect($path);
     }
@@ -38,14 +47,19 @@ class BlobController extends Controller
         ]);
 
         $user = auth()->user();
+        $token = $user->tokens->first();
 
-        if(empty($request->token)) {
-            $token_dir = $user->tokens->first()->token;
+        if(empty($token)) {
+            return response("You do not have an upload token, please create one to perform uploads", 403);
+        }
+
+        if(empty($request->query("token", null))) {
+            $token_dir = $token->token;
         } else {
             $token_dir = $request->token;
         }
 
-        $path = $request->file('archive')->storePublicly('files/storage/'.$token_dir);
+        $path = $request->file('archive')->storePublicly('files/storage/'.substr($token_dir, 0, 25));
 
         Metrics::create([
             'user_id' => $user->id,
