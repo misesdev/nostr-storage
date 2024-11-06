@@ -11,7 +11,7 @@ class BlobController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-            'archive' => ['required', 'image', 'max:2000']
+            'archive' => ['required', 'image', 'max:2048']
         ]);
 
         $user = auth()->user();
@@ -43,7 +43,7 @@ class BlobController extends Controller
     public function uploadFile(Request $request)
     {
         $request->validate([
-            'archive' => ['required', 'image', 'max:2000']
+            'archive' => ['required', 'image', 'max:2048']
         ]);
 
         $user = auth()->user();
@@ -73,7 +73,7 @@ class BlobController extends Controller
     {
         $token_dir = auth()->user()->tokens->first()->token;
 
-        Storage::delete('files/storage/'.$token_dir.'/'.$image);
+        Storage::delete('files/storage/'.substr($token_dir, 0, 25).'/'.$image);
 
         return [
             'success' => true,
